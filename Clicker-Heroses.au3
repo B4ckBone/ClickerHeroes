@@ -31,7 +31,7 @@ Global $x1 ;image search result
 Global $y1 ;image search result
 
 Global $hWnd = WinActivate("Clicker Heroes")
-WinMove("Clicker Heroes","",3097,205,1143,672)
+WinMove("Clicker Heroes","",100,100,1143,672)
 Global $WinPos[3]
 $WinPos = WinGetPos("Clicker Heroes")
 ;~ Consolewrite($winpos[0]&$winpos[1]&@crlf)
