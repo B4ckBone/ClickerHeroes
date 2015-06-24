@@ -143,13 +143,14 @@ Func lvldown()
 	MClick(790,70,1,10)
 Endfunc
 
-Func upgrades()
+Func upgrades() ; alwas upgrades the most expensive hero untill next lvl
 		Opt("SendKeyDelay", 500)
 		Opt("SendKeyDownDelay", 500)
-		MClick(553,600,30,1); click scrollbar all the way down
-	For $i=610 to 350 Step -45
-		MClick(100,$i,1,10)
-	Next
+		MClick(553,600,5,1); click scrollbar all the way down
+		MClick(92,496,1,0); click scrollbar all the way down
+;~ 	For $i=610 to 350 Step -45
+;~ 		MClick(100,$i,1,10)
+;~ 	Next
 	;~ 	MClick(553,649,30,1); click scrollbar down arrow
 ;~ 	MClick(553,506,30,1); click scrollbar dark area
 ;~ 	MouseClickDrag("left",550,250,550,600); pull scrollbar down
