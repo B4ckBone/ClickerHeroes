@@ -146,7 +146,10 @@ Endfunc
 Func upgrades() ; alwas upgrades the most expensive hero untill next lvl
 		Opt("SendKeyDelay", 500)
 		Opt("SendKeyDownDelay", 500)
+		MClick(551,241,5,1); click scrollbar all the way up
+		click()
 		MClick(553,600,5,1); click scrollbar all the way down
+		click()
 		MClick(92,496,1,0); click scrollbar all the way down
 ;~ 	For $i=610 to 350 Step -45
 ;~ 		MClick(100,$i,1,10)
@@ -217,8 +220,8 @@ Func goldfish()
 			$g1 = $g1 - $WinPos[0]
 			$g2 = $g2 - $WinPos[1]
 			MClick($g1, $g2,9,10)
-			MouseMove($g1, $g2)
-			MouseClick($g1, $g2,9,10)
+;~ 			MouseMove($g1, $g2)
+;~ 			MouseClick($g1, $g2,9,10)
 		EndIf
 
 	local $result = _ImageSearchArea('gf2.bmp',1,$WinPos[0],$WinPos[1],$WinPos[0]+1143,$WinPos[0]+672, $g1, $g2, 10)
@@ -227,8 +230,8 @@ Func goldfish()
 			$g1 = $g1 - $WinPos[0]
 			$g2 = $g2 - $WinPos[1]
 			MClick($g1, $g2,9,10)
-			MouseMove($g1, $g2)
-			MouseClick($g1, $g2,9,10)
+;~ 			MouseMove($g1, $g2)
+;~ 			MouseClick($g1, $g2,9,10)
 		EndIf
 
 	local $result = _ImageSearchArea('bee.bmp',1,$WinPos[0],$WinPos[1],$WinPos[0]+1143,$WinPos[0]+672, $g1, $g2, 10)
@@ -237,8 +240,8 @@ Func goldfish()
 			$g1 = $g1 - $WinPos[0]
 			$g2 = $g2 - $WinPos[1]
 			MClick($g1, $g2,9,10)
-			MouseMove($g1, $g2)
-			MouseClick($g1, $g2,9,10)
+;~ 			MouseMove($g1, $g2)
+;~ 			MouseClick($g1, $g2,9,10)
 		EndIf
 EndFunc
 
