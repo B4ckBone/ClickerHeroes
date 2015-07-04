@@ -21,6 +21,7 @@
 ; ... http://clickerheroes.wikia.com/wiki/Upgrades
 ; Cid 1 .. 4 down 10 first ability go back to 2 get 100lvl and ability
 ; Most hero souls in the least time
+; Windows 7 without aero 26 px .. win 8 45 px diff = 19
 
 #include <File.au3>
 #include <Misc.au3>
@@ -33,6 +34,8 @@ Global $hWnd = WinActivate("Clicker Heroes")
 WinMove("Clicker Heroes", "", 100,100, 1143, 672)
 Global $WinPos[3]
 $WinPos = WinGetPos("Clicker Heroes")
+;~ $WinPos[0]=$WinPos[0]+19; For windows 8 borders
+;~ $WinPos[1]=$WinPos[1]+19; For windows 8 borders
 ;~ Consolewrite($winpos[0]&$winpos[1]&@crlf)
 ;Size 1599,1120
 Opt("MouseCoordMode", 0) ;1=absolute, 0=relative, 2=client - need to shift all coordinates o.O
@@ -136,7 +139,7 @@ While True
 	;MAIN:
 	ConsoleWrite(@CRLF)
 	If $lvldown = True Then
-		For $i = 0 To 25 Step +1
+		For $i = 0 To 20 Step +1
 			ConsoleWrite("purClick # " & $i & @crlf)
 			pureclick()
 		Next
@@ -176,16 +179,15 @@ While True
 WEnd
 
 Func click()
-	For $i = 1 To 50 Step +1
+	For $i = 1 To 25 Step +1
 		MClick(850, 400, 10, 10)
 		Sleep(250)
 	Next
 	goldfish()
-	Herolvl()
 EndFunc   ;==>click
 
 Func pureclick()
-	For $i = 1 To 50 Step +1
+	For $i = 1 To 10 Step +1
 		MClick(850, 400, 10, 10)
 		Sleep(250)
 	Next
@@ -205,14 +207,14 @@ EndFunc   ;==>MClick
 
 Func lvlcheck()
 	; check for bouncing yellow !
-	$lvl = PixelSearch(910 + $WinPos[0], 35 + $WinPos[1], 930 + $WinPos[0], 55 + $WinPos[1], 0xFFFF00, 2)
+	$lvl = PixelSearch(910 + $WinPos[0], 35 + $WinPos[1], 930 + $WinPos[0], 55 + $WinPos[1], 0xFFFF00, 30)
 	If IsArray($lvl) = True Then
 		$upgrade = True
 	Else
 		$upgrade = False
 	EndIf
 	; check for boss clock pixel
-	$lvl = PixelSearch(820 + $WinPos[0], 198 + $WinPos[1], 826 + $WinPos[0], 204 + $WinPos[1], 0x4D5C81)
+	$lvl = PixelSearch(820 + $WinPos[0], 198 + $WinPos[1], 826 + $WinPos[0], 204 + $WinPos[1], 0x4D5C81,2)
 	If IsArray($lvl) = True Then
 		$Boss = True
 	Else
@@ -262,9 +264,16 @@ Func upgrades() ; alwas upgrades the most expensive hero untill next lvl
 EndFunc   ;==>upgrades
 
 Func lvlit()
-		For $i = 0 To 2 step +1
+	click()
+	click()
+;~ 		For $i = 0 To 2 step +1
 		Opt("SendKeyDelay", 300)
 		Opt("SendKeyDownDelay", 300)
+		MClick(553, 600, 5, 1); click scrollbar all the way down
+		Herolvl()
+		Herolvl()
+		Herolvl()
+		Herolvl()
 		MClick(551, 241, 5, 1); click scrollbar all the way up
 		Herolvl()
 		MClick(551, 500, 5, 1); click scrollbar all the way up
@@ -282,12 +291,12 @@ Func lvlit()
 		Herolvl()
 		Herolvl()
 		Herolvl()
-		Next
+;~ 		Next
 Endfunc
 
 Func bossfight()
-	For $i = 450 To 200 Step -50
-		MClick(611, $i, 1, 0)
+	For $i = 400 To 200 Step -50
+		MClick(611, $i, 2, 0)
 		Sleep(250)
 	Next
 EndFunc   ;==>bossfight
@@ -390,7 +399,7 @@ Func Herolvl()
 ;~ 		consolewrite($HeroBmp & " " & $arr[$hero]& @crlf)
 		;look for Hero names
 		Local $result = _ImageSearchArea($HeroBmp, 1, $WinPos[0] + 160, $WinPos[1] + 190, $WinPos[0] + 450, $WinPos[1] + 550, $g1, $g2, 50)
-		;look for Hero pieces
+		;look for Hero pics
 		;local $result = _ImageSearchArea($HeroBmp,1,$WinPos[0]+420,$WinPos[1]+190,$WinPos[0]+530,$WinPos[0]+650, $g1, $g2, 140)
 		If $result = 1 Then
 ;~ 			ConsoleWrite("Hero Found" & $hero & " " & $g1 & " " & $g2 & @crlf)
@@ -403,6 +412,7 @@ Func Herolvl()
 				MClick($hirex - $WinPos[0], $hirey - $WinPos[1], 1, 0)
 ;~ 				ConsoleWrite("Hiring Hero " & $hero + 1 & " Set herolvl db 1" & @CRLF)
 				$arr[$hero][1] = 1
+				Sleep(200)
 			EndIf
 			;lvl hero to array value
 ;~ 			local $startx =$WinPos[0]
@@ -450,9 +460,14 @@ EndFunc   ;==>Herolvl
 
 Func ascend()
 	AscendArray()
+	Send("{CTRLDOWN}")
 	For $i = 0 To 250 Step +1
-		Opt("SendKeyDelay", 300)
-		Opt("SendKeyDownDelay", 300)
+		Opt("SendKeyDelay", 200)
+		Opt("SendKeyDownDelay", 200)
+		MClick(553, 600, 5, 1); click scrollbar all the way down
+		Herolvl()
+		Herolvl()
+		Herolvl()
 		MClick(551, 241, 5, 1); click scrollbar all the way up
 		Herolvl()
 		Herolvl()
@@ -475,9 +490,8 @@ Func ascend()
 		Herolvl()
 		Herolvl()
 	Next
+	Send("{CTRLUP}")
 	If $arr[26][1] = 10 Then
-		Opt("SendKeyDelay", 300)
-		Opt("SendKeyDownDelay", 300)
 		MClick(553, 600, 5, 1); click scrollbar all the way down
 		MouseClick("left", 300, 300, 1, 10)
 		For $i = 0 To 50 Step +1
@@ -494,8 +508,20 @@ Func ascend()
 				;local $result = _ImageSearchArea($HeroBmp,1,$WinPos[0]+420,$WinPos[1]+190,$WinPos[0]+530,$WinPos[0]+650, $g1, $g2, 140)
 				If $result = 1 Then
 					If $hero = 19 Then
+						sleep(300)
+						MouseClick("left", 296, $h, 1, 2); Abilities Getting Ascension
+						sleep(300)
+						MouseClick("left", 328, $h, 1, 2)
+						sleep(300)
+						MouseClick("left", 380, $h, 1, 2)
+						sleep(300)
+						MouseClick("left", 412, $h, 1, 2)
+						sleep(300)
+						MouseClick("left", 444, $h, 1, 2)
+						sleep(300)
 						Local $h = $g2 - $WinPos[1] + 57 ;######### Ascending
 						MouseClick("left", 310, $h, 2, 5)
+						Sleep("1000")
 						MouseClick("left", 490, 445, 2, 5)
 						SetArray()
 						_FileWriteFromArray("save.txt", $arr)
